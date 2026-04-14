@@ -127,23 +127,19 @@ function initTestimonialsSlider() {
   });
 }
 
-const cloudName = "dgq3xkdqy";
-const folder = "Cofetarie";
+const gallery = document.getElementById("gallery");
 
-fetch(`https://res.cloudinary.com/${cloudName}/image/list/${folder}.json`)
-  .then((res) => res.json())
-  .then((data) => {
-    const gallery = document.getElementById("gallery");
-    gallery.innerHTML = "";
+// clear existing content just in case
+gallery.innerHTML = "";
 
-    data.resources.forEach((img) => {
-      const image = document.createElement("img");
-      image.src = `https://res.cloudinary.com/${cloudName}/image/upload/${img.public_id}.jpg`;
-      image.className = "gallery-image";
-      gallery.appendChild(image);
-    });
-  })
-  .catch((err) => console.error("Cloudinary error:", err));
+// load images sequentially from local files
+for (let i = 1; i <= 16; i++) {
+  const image = document.createElement("img");
+  image.src = `img${i}.jpg`;
+  image.alt = `Cake ${i}`;
+  image.loading = "lazy";
+  gallery.appendChild(image);
+}
 
 setYear();
 initMobileNav();
